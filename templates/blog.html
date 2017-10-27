@@ -1,31 +1,26 @@
+{% extends "base.html" %}
 
-<!doctype html>
-<html>
-    <head>
-        <title>{{title}}</title>
-        <style>
-            .error {
-                color: red;
-            }
-        </style>
-        <a href="/">Main Blog Page</a> 
-        <a href="/newpost">Add a blog entry</a>
-        <a href='/blog'>All Blogs</a>
-        <a href="/logout">logout</a>
-
-    </head>
-<body>
-
-    {% with messages = get_flashed_messages(with_categories=True) %}
-    
-    {% for category,message in messages %}
-        <p class="{{category}}">{{message}}</p>
-    {% endfor %}
-    
-{% endwith %}
 {% block content %}
+
+<h1 style="text-align:center">Blog Posts</h1>
+
+<ul>
+    
+    {% for user in users %}
+        {% for blog in blogs %}
+            {% if user.id == blog.owner_id %}    
+             
+        
+                <h2><a href="/blog?id={{blog.id}}" value="{{blog.title}}">{{blog.title}}</a></h2>
+                <h4 value="{{blog.body}}">{{blog.body}}</h4>
+                <h5><i>written by <a href="/blog?user={{user.id}}">{{user.username}}</a></i></h5>
+                <input type="hidden" name="id" value="{{blog.id}}"/>
+                <hr />
+       
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</ul>
+
+
 {% endblock %}
-
-
-</body>
-</html>
